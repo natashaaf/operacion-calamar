@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operación Calamar · Jornada de Paintball</title>
+  <link rel="stylesheet" href="./styles/estilos.css">
+  <script src="./scripts/miScriptSol.js" defer></script>
+
+  <!--
+    Enlaza aquí tu script (scripts/miScript.js).
+    A tener en cuenta:
+      - Que no bloquee la carga de la página.
+      - NO uses type="module" porque no son visibles con Onclick
+  -->
+</head>
+<body>
+
+  <!-- Mejora progresiva: si no hay JavaScript, la web sigue siendo legible -->
+  <noscript>
+    <div class="aviso-noscript">
+      Sin JavaScript no hay cuenta atrás, ni calculadora, ni inscripción.
+      Vuelve al presente, McFly, y activa JavaScript.
+    </div>
+  </noscript>
+
+  <!-- Aviso de conexión (oculto por defecto; lo mostrará el JS si hiciese falta) -->
+  <div id="avisoConexion" class="aviso-conexion oculto" role="alert">
+    No tienes conexión. Puedes crear una incidencia o iniciar un incendio purificador.
+  </div>
+
+  <header class="cabecera">
+    <nav class="menu" aria-label="Navegación principal">
+      <a class="logo" href="#inicio">Op. Calamar</a>
+      <a href="#plan">Planazo</a>
+      <a href="#entradas">Entradas</a>
+      <a href="#inscripcion">Inscripción</a>
+
+      <!--
+        Usamos el atributo onclick directamente en el HTML,
+        por el momento. Lo suyo es addEventListener() desde el .js.
+        Lo veremos más adelante.
+        La lunita ha sido idea de Claudia. A las IA les gustan mucho
+        los iconitos, son como niños.
+      -->
+      <button id="btnModo" class="btn-modo" type="button" onclick="cambiarModo()">🌙 Modo noche</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============ PORTADA ============ -->
+    <section id="inicio" class="hero">
+      <!-- saludo según la hora del día -->
+      <p id="saludo" class="saludo">Bienvenido, recluta</p>
+
+      <h1>Operación <span class="calamar">Calamar</span></h1>
+      <p class="lema">Lucha de clase: alumnos contra profes.</p>
+
+      <!--  fecha del evento formateada -->
+      <p class="fecha-evento">Día D: <strong id="fechaEvento">18/12/2026 · 10:00</strong></p>
+
+      <!--  cuenta atrás. La fecha viaja en el atributo data-fecha -->
+      <div id="cuentaAtras" class="cuenta-atras" data-fecha="2026-12-18T10:00:00">
+        <div class="bloque-tiempo"><span id="dias">--</span><small>días</small></div>
+        <div class="bloque-tiempo"><span id="horas">--</span><small>horas</small></div>
+        <div class="bloque-tiempo"><span id="minutos">--</span><small>min</small></div>
+        <div class="bloque-tiempo"><span id="segundos">--</span><small>seg</small></div>
+      </div>
+      <p id="mensajeCuenta" class="mensaje-cuenta"></p>
+
+      <a class="boton" href="#inscripcion">¡Quiero acribillar a un profe!</a>
+    </section>
+
+    <!-- ============ Planazo ============ -->
+    <section id="plan" class="seccion">
+      <h2>Plan de batalla</h2>
+      <p class="intro">
+        Jornada de team building para que clase y profesorado se conozcan mejor. Pocas cosas unen más que dispararnos mutuamente. <strong>Experience the american way of life!</strong>
+      </p>
+
+      <ol class="plan">
+        <li><time>09:30</time><span>Quedada en la puerta. Pasamos lista (si Xade nos deja).</span></li>
+        <li><time>10:00</time><span>Briefing, reparto de chalecos y repaso de reglas.</span></li>
+        <li><time>10:30</time><span>Primera ronda: <strong>¡caza a tu tutor de proyecto!</strong></span></li>
+        <li><time>12:30</time><span>Bocadillo de reconciliación.</span></li>
+        <li><time>13:30</time><span>Segunda ronda: <strong>¡Traición!¡Equipos mezclados!</strong></span></li>
+        <li><time>15:00</time><span>Tiritas en las pupitas y foto de grupo.</span></li>
+      </ol>
+
+      <h3>Reglas de oro</h3>
+      <div class="reglas">
+        <article class="tarjeta regla">
+          <h4>1 · En la cabeza, no!</h4>
+          <p>"... que lo dejas tonto", decía mi madre. Apunta al torso y, especialmente, al orgullo.</p>
+        </article>
+        <article class="tarjeta regla">
+          <h4>2 · Las notas no se negocian a tiros</h4>
+          <p>Se puede intentar igualmente. No funcionará. Los profes son incorruptibles.</p>
+        </article>
+        <article class="tarjeta regla">
+          <h4>3 · Traiciona, pero poco</h4>
+          <p>Cambia de bando, pero avísalo en voz alta (Ya sabes: el que avisa, no es traidor). </p>
+        </article>
+        <article class="tarjeta regla">
+          <h4>4 · El profesorado también paga</h4>
+          <p>Sobre todo, en dignidad. Puede que también en cafés.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ ENTRADAS ============ -->
+    <section id="entradas" class="seccion">
+      <h2>Tu entrada</h2>
+      <p class="intro">
+        Aquí no se paga con dinero: se paga con <strong>entregas</strong> de actividades
+        de los distintos módulos. Y si te portas bien en clase, hay descuento.
+      </p>
+
+      <!--  calculadora de entradas -->
+      <div id="calculadora" class="tarjeta">
+        <label for="tipoEntrada">Tipo de entrada</label>
+        <select id="tipoEntrada">
+          <option value="10" title="Starship Troopers (1997)">Starship Trooper: Carne de cañón (10 entregas)</option>
+          <option value="12" title="Acorralado (1982)">John Rambo en Acorralado (12 entregas)</option>
+          <option value="15" title="Terminator 2: Judgment Day (1991)">La mismísima Sarah Connor de T2 (15 entregas)</option>
+        </select>
+
+        <label for="entregadas">Méritos bélicos (entregas realizadas)</label>
+        <input type="number" id="entregadas" min="0" max="40" value="0">
+
+        <fieldset>
+          <legend>Descuentos (se acumulan)</legend>
+          <!-- El % de cada descuento está en data-descuento -->
+          <label class="check">
+            <input type="checkbox" class="descuento" id="chkComportamiento" data-descuento="10">
+            Disciplina de trinchera: Buen comportamiento en clase (-10 %)
+          </label>
+          <label class="check">
+            <input type="checkbox" class="descuento" id="chkParticipacion" data-descuento="10">
+            Soldado voluntario para misiones: Participación activa (-10 %)
+          </label>
+          <label class="check">
+            <input type="checkbox" class="descuento" id="chkPuntualidad" data-descuento="5">
+            Reloj de campaña: Puntualidad casi británica (-5 %)
+          </label>
+          <label class="check">
+            <input type="checkbox" class="descuento" id="chkCafe" data-descuento="15">
+           Respeto al alto mando: Invito al profe a café (-15 %, verificable)
+          </label>
+        </fieldset>
+
+        <button type="button" class="boton" onclick="calcularEntrada()">Calcular mi entrada</button>
+        <p id="resultadoEntrada" class="resultado"></p>
+      </div>
+    </section>
+
+    <!-- ============ INSCRIPCIÓN ============ -->
+    <section id="inscripcion" class="seccion">
+      <h2>Inscripción</h2>
+      <p class="intro">Rellena la ficha. Todos los campos son obligatorios.</p>
+
+      <!--  validación del formulario -->
+      <form id="formInscripcion" class="tarjeta" novalidate onsubmit="return false">
+        <label for="nombre">Nombre y apellidos</label>
+        <input type="text" id="nombre" autocomplete="off" placeholder="Ana García">
+        <small id="errorNombre" class="error"></small>
+
+        <label for="alias">Alias de combate (3 a 12 caracteres)</label>
+        <input type="text" id="alias" autocomplete="off" placeholder="Ellen Ripley">
+        <small id="errorAlias" class="error"></small>
+
+        <label for="email">Correo electrónico</label>
+        <input type="text" id="email" inputmode="email" autocomplete="off" placeholder="recluta@centro.edu">
+        <small id="errorEmail" class="error"></small>
+
+        <label for="bando">Bando</label>
+        <select id="bando">
+          <option value="">— Elige tu bando —</option>
+          <option value="alumnado">Alumnado</option>
+          <option value="profesorado">Profesorado</option>
+        </select>
+        <small id="errorBando" class="error"></small>
+
+        <label class="check">
+          <input type="checkbox" id="acepto">
+          Acepto salir manchado/a y no presentar queja en inspección.
+        </label>
+        <small id="errorAcepto" class="error"></small>
+
+        <button type="button" class="boton" onclick="inscribirse()">¡Apuntarme!</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <!--  datos del equipo de combate (navigator, screen, window) -->
+    <p id="infoNavegador" class="info-navegador">Tu equipo de combate: activa JavaScript para ver los datos.</p>
+    <p class="aviso-legal">
+      Web de actividad 2 de la UD3 del módulo de Desarrollo Web en Entorno Cliente.
+      Ningún profesor resultó manchado durante su creación (de momento).
+    </p>
+  </footer>
+
+  <!--  botón para volver arriba -->
+  <button id="btnArriba" class="btn-arriba" type="button" onclick="volverArriba()" aria-label="Volver arriba">↑</button>
+
+  <!--  ventana de confirmación. Ya está maquetada; solo hay que abrirla desde JS -->
+  <dialog id="modalConfirmacion" class="modal">
+    <h3>¡Inscripción registrada!</h3>
+    <p id="mensajeModal"></p>
+    <button type="button" class="boton" onclick="document.getElementById('modalConfirmacion').close()">Entendido</button>
+  </dialog>
+
+</body>
+</html>
