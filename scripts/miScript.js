@@ -41,7 +41,9 @@
    3. Prueba también console.warn() y console.error() y observa la diferencia.
 */
 
-
+console.log("Comprobación de carga.");
+console.warn("Comprobación con Warn.");
+console.error("Comprobación con Error.");
 
 /* ---------- Saludo, fecha y cuenta atrás ----------
    a) Saludo: cambia el texto de #saludo según la hora actual (new Date().getHours()).
@@ -57,6 +59,73 @@
       y escribe un mensaje en #mensajeCuenta.
       Para probarlo, cambia temporalmente data-fecha a una fecha pasada.
 */
+
+/*  =============
+*    A) SALUDO
+*   =============
+*/ 
+const horaActual = new Date().getHours();
+const saludo = document.getElementById('saludo'); 
+
+if (horaActual >= 6 && horaActual < 12) {
+   saludo.textContent = "Buenos días! ";
+} else if (horaActual >= 12 && horaActual < 19) {
+   saludo.textContent = "Buenas Tardes!";
+} else if (horaActual >= 19 && horaActual < 23) {
+   saludo.textContent = "Buenas Noches!";
+} else { 
+     saludo.textContent = "Vete a dormir!";
+}
+
+/*  =============
+*    B) FECHA
+*   =============
+*/
+
+const cuentaAtras = document.getElementById('cuentaAtras');
+const fechaEvento = cuentaAtras.dataset.fecha;
+
+const fechaFinal = new Date(fechaEvento);
+
+const elementoFechaEvento = document.getElementById('fechaEvento');
+
+const fechaFormateada = fechaFinal.toLocaleDateString();
+const horas = String(fechaFinal.getHours()).padStart(2, '0');
+const minutos = String(fechaFinal.getMinutes()).padStart(2, '0');
+
+document.querySelector('#fechaEvento').textContent = `${fechaFormateada} - ${horas}:${minutos}`;
+
+/* ===================
+*   C) CUENTA ATRÁS
+*  ===================
+*/
+
+setInterval(() => { 
+   const ahora = new Date();
+   const diferencia = fechaFinal - ahora;
+
+   // Calculo de tiempo
+   const segundosRestantes = Math.floor(diferencia / 1000) % 60;
+   const minutosRestantes = Math.floor(diferencia / (1000 * 60)) % 60;
+   const horasRestantes = Math.floor(diferencia / (1000 * 60 * 60)) % 24;
+   const diasRestantes = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+
+   // Para que tenga 2 cifras
+   document.getElementById("dias").textContent = diasRestantes;
+   document.getElementById("horas").textContent = String(horasRestantes).padStart(2, '0');
+   document.getElementById("minutos").textContent = String(minutosRestantes).padStart(2, '0');
+   document.getElementById("segundos").textContent = String(segundosRestantes).padStart(2, '0');
+}, 1000);
+
+
+/* ===========================
+*   D) CUANDO LLEGUE LA HORA
+* d) Cuando llegue la hora: detén el intervalo (clearInterval), pon todo a 00
+      y escribe un mensaje en #mensajeCuenta.
+      Para probarlo, cambia temporalmente data-fecha a una fecha pasada.
+*  ===========================
+*/
+
 
 
 
